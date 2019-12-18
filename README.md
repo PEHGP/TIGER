@@ -1,3 +1,3 @@
 # TIGER
 Just Scripts.  
-These scripts are further analyzed based on CRISPResso2 Results.
+These scripts are used to analyze results of CRISPResso2
