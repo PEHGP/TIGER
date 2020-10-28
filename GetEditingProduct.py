@@ -1,14 +1,15 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python
 import sys,os,pandas
 import collections
 if __name__ == '__main__':
 	line=[]
-	line=os.popen("find . -name Pure_Alleles_frequency_table_around_sgRNA.txt").readlines()
-	#line=os.popen("find . -name 'Pure_Alleles_frequency_table_around_sgRNA.txt' ").readlines()
+	line=os.popen("find . -name 'Alleles_frequency_table_around_sgRNA*.txt'").readlines()
+	#line=os.popen("find . -name 'Pure_Alleles_frequency_table_around_sgRNA*.txt' ").readlines()
 	for x in line:
 		x=x.rstrip()
 		seql=[]
 		dfl=[]
+		print x
 		df=pandas.read_csv(x,sep="\t",header=0,index_col=None)
 		df["indel_size"]=df["n_inserted"]-df["n_deleted"]
 		#df["inframe"]=(df["indel_size"]+1)%3==0

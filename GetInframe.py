@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python
 import pandas,sys
 f=sys.argv[1] #indel_size_freq.txt
 df=pandas.read_table(f,sep="\t",header=0,index_col=0)

@@ -28,7 +28,7 @@ def GetIndelList(flist):
 	return df_r,df_freq
 
 if __name__ == '__main__':
-	line=os.popen("find . -name 'Pure_Alleles_frequency_table.txt' ").readlines()
+	line=os.popen("find . -name 'Alleles_frequency_table.zip' ").readlines()
 	df_r,df_freq=GetIndelList(line)
 	df_r.to_csv("indel_size.txt",sep="\t")
 	df_freq.to_csv("indel_size_freq.txt",sep="\t")
