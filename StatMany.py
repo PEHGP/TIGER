@@ -95,11 +95,11 @@ if __name__ == '__main__':
 			aa3=df_p[df_p["aa_change"]==3]["#Reads"].sum()
 			aa_others=df_p[df_p["aa_change"]>3]["#Reads"].sum()
 			d[name]["Functional_in_inframe"]=yes_sum/float(indel_sum)
-			d[name]["aa0"]=aa0/indel_sum
-			d[name]["aa1"]=aa1/indel_sum
-			d[name]["aa2"]=aa2/indel_sum
-			d[name]["aa3"]=aa3/indel_sum
-			d[name]["aa_others"]=aa_others/indel_sum
+			d[name]["aa0"]=aa0/float(indel_sum)
+			d[name]["aa1"]=aa1/float(indel_sum)
+			d[name]["aa2"]=aa2/float(indel_sum)
+			d[name]["aa3"]=aa3/float(indel_sum)
+			d[name]["aa_others"]=aa_others/float(indel_sum)
 		print(p_sum,inframe_sum,indel_sum)
 		d[name]["inframe"]=p_sum/float(indel_sum)
 		d[name]["inframe_old"]=inframe_sum/float(indel_sum)
