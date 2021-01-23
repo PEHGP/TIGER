@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python
 import matplotlib
 matplotlib.use('Agg')
 import sys,re,os,pandas
@@ -152,7 +152,7 @@ def dealseq(seq):
 	return dseq[::-1]
 def get_region(line,grna,ptime,extend): #list,Reverse complementarity yes
 	if not grna:
-		print "====grna is not exist!===="
+		print("====grna is not exist!====")
 		sys.exit()
 	Fr=open("temp"+ptime+".fa","w")
 	Fr.write(">temp"+ptime+"\n")
@@ -177,9 +177,9 @@ def get_region(line,grna,ptime,extend): #list,Reverse complementarity yes
 	#print grna
 	#print line[0][start-extend:end+extend]
 	if start<0:
-		print "====not found grna region===="
-		print line
-		print grna
+		print("====not found grna region====")
+		print(line)
+		print(grna)
 		sys.exit()
 	return start-extend,end+extend
 def main(f,prefix,ref,min_score):#deletion judge
@@ -192,7 +192,7 @@ def main(f,prefix,ref,min_score):#deletion judge
 	scored={"A":2,"T":2,"G":3,"C":3,"N":0}
 	extend=20
 	grna=re.search("-g (.*?) ",open("%s_CRISPResso_RUNNING_LOG.txt"%prefix).read()).group(1)
-	print grna
+	print(grna)
 	for n,x in enumerate(lines):
 		x=x.rstrip()
 		l=x.split("\t")
@@ -281,32 +281,36 @@ if __name__=="__main__":
 	else:
 		args = get_parser().parse_args()
 	if os.path.isdir(args.prefix):
-		print "%s is exist"%args.prefix
+		print("%s is exist"%args.prefix)
 		sys.exit()
 	os.system("mkdir %s"%args.prefix)
 	samplelist=[]
-	lines=os.popen("find . -name \"Alleles_frequency_table.zip\"").readlines()
+	lines=os.popen("find -L . -name \"Alleles_frequency_table.zip\"").readlines()
 	for xi in lines:
 		pa=xi.rstrip()
 		pl=pa.split("/")
 		#print pl 
 		#sys.exit()
+		print(pl)
 		if len(pl)==4: #need change
-			if not pl[2] in samplelist:
-				samplelist.append(pl[2])
+			print(pl[2])
+			sample_name=pl[2].split("_")[-1]
+			if not sample_name in samplelist:
+				samplelist.append(sample_name)
 			else:
-				print pl[2]
-				print "========same sample name======="
-				print "error error error error error"
+				print(sample_name)
+				print("========same sample name=======")
+				print("error error error error error")
 				sys.exit()
-			print pa
+			print(pa)
+			#sys.exit()
 			os.system("unzip -o %s -d %s"%(pa,args.prefix))
-			os.system("mv %s/Alleles_frequency_table.txt %s/%s_Alleles_frequency_table.txt"%(args.prefix,args.prefix,pl[2]))
-			os.system("cp %s/CRISPResso_RUNNING_LOG.txt %s/%s_CRISPResso_RUNNING_LOG.txt"%("/".join(pl[:-1]),args.prefix,pl[2]))
+			os.system("mv %s/Alleles_frequency_table.txt %s/%s_Alleles_frequency_table.txt"%(args.prefix,args.prefix,sample_name))
+			os.system("cp %s/CRISPResso_RUNNING_LOG.txt %s/%s_CRISPResso_RUNNING_LOG.txt"%("/".join(pl[:-1]),args.prefix,sample_name))
 	path=os.getcwd()
 	os.chdir(path+"/"+args.prefix)
 	for s in samplelist:
-		print s
+		print(s)
 		main("%s_Alleles_frequency_table.txt"%s,s,args.ref,int(args.score))
 		if not args.debug:
 			os.remove("%s_Alleles_frequency_table.txt"%s)
